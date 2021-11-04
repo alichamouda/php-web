@@ -1,0 +1,53 @@
+html {
+    font-family: sans-serif;
+}
+main {
+    padding: 32px;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+#factorial-error {
+    color: red;
+    font-weight: 700;
+    height: 20px;
+}
+
+form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+label {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+}
+
+input {
+    margin: 4px;
+    max-width: 300px;
+}
+
+button {
+    max-width: 200px;
+    margin-top: 24px;
+    margin-left: 4px;
+}
+
+.action-btn {
+    margin: 4px 0;
+}
