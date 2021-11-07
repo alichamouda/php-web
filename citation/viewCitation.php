@@ -1,9 +1,21 @@
 <?php
-// afficher la sitation qu'on vient de créer
-echo "Login: ".htmlspecialchars($_POST["login"]) .
-    "<br>Citation: " .
-    htmlspecialchars($_POST["citation"]) .
-    "<br>Auteur: " .
-    htmlspecialchars($_POST["auteur"]) .
-    "<br>Date: " .
-    htmlspecialchars($_POST["date-citation"]);
+
+
+
+
+?>
+
+
+<body style="font-family: sans-serif;">
+    <nav><a href="/citation/ajoutCtrl.php">Retour</a></nav>
+    <main style="padding:32px 64px;">
+        <article>
+            <header>
+                <h2><?php echo htmlspecialchars($_POST["auteur"]); ?></h2>
+                <h4><?php echo htmlspecialchars($_POST["login"]); ?></h4>
+                <span>Date: <?php echo htmlspecialchars($_POST["date-citation"]); ?></span>
+                <p><?php echo htmlspecialchars($_POST["citation"]); ?></p>
+            </header>
+        </article>
+    </main>
+</body>
