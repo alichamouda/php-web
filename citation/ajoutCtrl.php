@@ -16,7 +16,7 @@
         }
 
         form {
-            padding: 0 16px ;
+            padding: 0 16px;
             max-width: 450px;
             border-left: 4px #444444 solid;
             border-radius: 2px;
@@ -86,63 +86,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if (!$hasErrors && $_SERVER['REQUEST_METHOD'] === 'POST') { ?>
+if (!$hasErrors && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    include "db/db-config.php";
+    include "db/dbFunctions.php";
+    $connection = getConnection();
+    $isInserted = insertQuote(
+        $connection,
+        $login,
+        $auteur,
+        $citation,
+        $dateCitation
+    );
+    if (!$isInserted) { ?>
+        <p>Database error</p>
+    <?php
+    } else {
+    ?>
 
-
-    <body>
-        <nav><a href="/citation/ajoutCtrl.php">Retour</a></nav>
-        <main>
-            <article>
-                <header>
+        <body>
+            <nav><a href="/citation/ajoutCtrl.php">Retour</a></nav>
+            <main>
+                <article>
                     <h2><?php echo $auteur; ?></h2>
                     <h4><?php echo $login; ?></h4>
                     <span>Date: <?php echo $dateCitation; ?></span>
                     <p><?php echo $citation; ?></p>
-                </header>
-            </article>
-        </main>
-    </body>
+                </article>
+            </main>
+        </body>
 
-<?php } else { ?>
+    <?php }
+} else { ?>
 
     <body>
+        <nav>
+            <a href="/citation/">Accueil</a>
+            <a href="/citation/citations.php">Citations</a>
+        </nav>
+
         <main>
-            <article>
-                <header>
-                    <h1>Formulaire de création de citations</h1>
-                </header>
-                <form method="post" name="FrameCitation" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <h2>Formulaire de création de citations</h1>
+            <form method="post" name="FrameCitation" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <div class="form-section">
+                    <label for="login">Login*</label>
+                    <input name="login" maxlength="64" size="32" value="<?php echo $login ?>">
+                    <p class="form-error"><?php echo $errors[1] ?></p>
+                </div>
+                <div class="form-section">
 
-                    <div class="form-section">
-                        <label for="login">Login*</label>
-                        <input name="login" maxlength="64" size="32" value="<?php echo $login ?>">
-                        <p class="form-error"><?php echo $errors[1] ?></p>
-                    </div>
-                    <div class="form-section">
+                    <label for="citation">Citation*</label>
+                    <textarea minlength="10" cols="128" rows="5" name="citation"><?php echo $citation ?></textarea>
+                    <p class="form-error"><?php echo $errors[3] ?></p>
+                </div>
+                <div class="form-section">
+                    <label for="auteur">Auteur*</label>
+                    <input name="auteur" maxlength="128" size="64" value="<?php echo $auteur ?>">
+                    <p class="form-error"> <?php echo $errors[0] ?></p>
 
-                        <label for="citation">Citation*</label>
-                        <textarea minlength="10" cols="128" rows="5" name="citation"><?php echo $citation ?></textarea>
-                        <p class="form-error"><?php echo $errors[3] ?></p>
-                    </div>
-                    <div class="form-section">
-                        <label for="auteur">Auteur*</label>
-                        <input name="auteur" maxlength="128" size="64" value="<?php echo $auteur ?>">
-                        <p class="form-error"> <?php echo $errors[0] ?></p>
-
-                    </div>
-                    <div class="form-section">
-                        <label for="date-citation">Date*</label>
-                        <input name="date-citation" type="date" value="<?php echo strlen($dateCitation) > 0 ? $dateCitation : date('Y-m-d') ?>">
-                        <p class="form-error"> <?php echo $errors[2] ?></p>
-                    </div>
-                    <div class="form-section button-ctr">
-                        <button name="Envoyer" type="submit">Enregistrer la citation</button>
-                        <button name="Effacer" type="reset">Annuler</button>
-                    </div>
-                    </tbody>
-                    </table>
-                </form>
-            </article>
+                </div>
+                <div class="form-section">
+                    <label for="date-citation">Date*</label>
+                    <input name="date-citation" type="date" value="<?php echo strlen($dateCitation) > 0 ? $dateCitation : date('Y-m-d') ?>">
+                    <p class="form-error"> <?php echo $errors[2] ?></p>
+                </div>
+                <div class="form-section button-ctr">
+                    <button name="Envoyer" type="submit">Enregistrer la citation</button>
+                    <button name="Effacer" type="reset">Annuler</button>
+                </div>
+                </tbody>
+                </table>
+            </form>
         </main>
     </body>
 <?php } ?>
