@@ -1,9 +1,8 @@
 
-
-
-
 <?php
-include "db-config.php";
+
+
+include "dbConfig.php";
 
 try {
     $dbh = getConnection();
@@ -22,7 +21,9 @@ try {
         )'
     );
     $dbh = NULL;
-    print("success");
+    header("Location: "."/citation/index.php");
+    die();
+
 
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";

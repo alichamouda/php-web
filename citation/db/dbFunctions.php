@@ -1,12 +1,9 @@
 <?php 
-
+require_once( __DIR__."/../entities/Citation.php");
 // insert new quote
 function insertQuote(
     $connection,
-    $login,
-    $author,
-    $quote,
-    $quoteDate
+    $citation
 ) {
     try {
         $statement = $connection->
@@ -18,10 +15,10 @@ function insertQuote(
             ');
         $statement->execute(
             array(
-                ':login'=> $login,
-                ':author'=> $author,
-                ':quote_date'=> $quoteDate,
-                ':quote'=> $quote));
+                ':login'=> $citation->get_login(),
+                ':author'=> $citation->get_auteur(),
+                ':quote_date'=> $citation->get_dateCitation(),
+                ':quote'=> $citation->get_citation()));
         return true;
 
     }catch(PDOException $e) {
@@ -35,9 +32,15 @@ function getLastFiveDaysQuotes($connection) {
     try {
         $statement = $connection->
             prepare('
-                SELECT * 
+                SELECT ID as id, 
+                LOGIN as login,
+                AUTEUR as auteur,
+                DATE_DE_CITATION as dateCitation,
+                CITATION as citation,
+                DATE_ENREGISTREMENT as dateEnregistrement  
                 FROM CITATION
                 WHERE DATE_ENREGISTREMENT >= DATE_SUB(NOW(), INTERVAL 5 DAY)');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Citation');
         $statement->execute();
         return $statement->fetchAll();
     }catch(PDOException $e) {
@@ -51,7 +54,13 @@ function getLastFiveDaysQuotes($connection) {
 function getAllQuotes($connection) {
     try {
         $statement = $connection->
-            prepare('SELECT * FROM CITATION');
+            prepare('SELECT ID as id, 
+            LOGIN as login,
+            AUTEUR as auteur,
+            DATE_DE_CITATION as dateCitation,
+            CITATION as citation,
+            DATE_ENREGISTREMENT as dateEnregistrement  FROM CITATION');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Citation');
         $statement->execute();
     return $statement->fetchAll();
 
@@ -64,11 +73,17 @@ function getQuoteByID($connection, $id) {
     try {
         $statement = $connection->
             prepare('
-                SELECT * 
+                SELECT ID as id, 
+                    LOGIN as login,
+                    AUTEUR as auteur,
+                    DATE_DE_CITATION as dateCitation,
+                    CITATION as citation,
+                    DATE_ENREGISTREMENT as dateEnregistrement
                 FROM CITATION
                 WHERE ID = :id');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Citation');
         $statement->execute(array(':id'=> $id));
-        return $statement->fetchAll();
+        return $statement->fetch();
     }catch(PDOException $e) {
         print "Erreur !: " . $e->getMessage() . "<br/>";
         return false;
@@ -79,9 +94,15 @@ function getAllQuotesByLogin($connection, $login) {
     try {
         $statement = $connection->
             prepare('
-                SELECT * 
+                SELECT ID as id, 
+                LOGIN as login,
+                AUTEUR as auteur,
+                DATE_DE_CITATION as dateCitation,
+                CITATION as citation,
+                DATE_ENREGISTREMENT as dateEnregistrement 
                 FROM CITATION
                 WHERE LOGIN = :login');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Citation');
         $statement->execute(array(':login'=> $login));
         return $statement->fetchAll();
     }catch(PDOException $e) {
@@ -95,9 +116,16 @@ function getAllQuotesByAuthor($connection, $author) {
     try {
         $statement = $connection->
             prepare('
-                SELECT * 
+                SELECT 
+                ID as id, 
+                LOGIN as login,
+                AUTEUR as auteur,
+                DATE_DE_CITATION as dateCitation,
+                CITATION as citation,
+                DATE_ENREGISTREMENT as dateEnregistrement  
                 FROM CITATION
                 WHERE AUTEUR = :author');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Citation');
         $statement->execute(array(':author'=> $author));
         return $statement->fetchAll();
     }catch(PDOException $e) {

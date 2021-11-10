@@ -1,7 +1,7 @@
 <?php
 
 include "dbFunctions.php";
-include "db-config.php";
+include "dbConfig.php";
 
 $connection = getConnection();
 $login="alichamouda";
