@@ -12,7 +12,8 @@ function getConnection() {
         $DB_USERNAME,
         $DB_PASSWORD,
         array(
-            PDO::ATTR_PERSISTENT => true
+            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         )
     );
 }
