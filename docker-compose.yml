@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  quote-server:
+    build: .
+    restart: on-failure
+    ports:
+      - 8080:80
+    volumes:
+      - type: bind
+        source: ./citation
+        target: /var/www/html
+  
+  quote-db:
+    image: mysql:5
+    restart: always
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=0000
+      - MYSQL_DATABASE=QUOTE_DB
+      - MYSQL_USER=QUOTE_USER
+      - MYSQL_PASSWORD=QUOTE0000
+
+volumes:
+  mysqldata:

@@ -1,11 +1,9 @@
 <?php
+require_once(__DIR__."/ui_components/quotePreview.php");
+require_once(__DIR__."/repositories/QuoteRepository.php");
 
-include "db/dbFunctions.php";
-include "db/dbConfig.php";
-include "ui_components/quotePreview.php";
 $id = (isset($_GET['id']) && is_numeric($_GET['id'])) ? intval($_GET['id']): -1;
+$quote =QuoteRepository::getInstance()->getQuoteByID($id);
+quotePreview($quote, "/");
 
-$connection = getConnection();
-$citation = getQuoteByID($connection,$id);
-quotePreview($citation, "/citation/");
 ?>

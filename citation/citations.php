@@ -1,11 +1,10 @@
 <?php
-include "db/dbConfig.php";
-include "db/dbFunctions.php";
-$connection = getConnection();
-$citations = getAllQuotes($connection);
+require_once(__DIR__."/repositories/QuoteRepository.php");
+require_once(__DIR__."/ui_components/quoteRow.php");
 ?>
+
 <nav>
-    <a href="/citation/">Retour</a>
+    <a href="/">Retour</a>
 </nav>
 <h2>Toutes les citations</h2>
 <table>
@@ -20,11 +19,6 @@ $citations = getAllQuotes($connection);
         </tr>
     </thead>
     <tbody>
-        <?php
-        include "ui_components/quoteRow.php";
-        foreach ($citations as $citation) {
-            quoteRow($citation);
-        }
-        ?>
+    <?php quoteRows(QuoteRepository::getInstance()->getAllQuotes());?>
     </tbody>
 </table>

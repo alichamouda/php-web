@@ -1,16 +1,14 @@
 <?php
-include "db/userFunctions.php";
-include "db/dbConfig.php";
 require_once(__DIR__."/entities/User.php");
+require_once(__DIR__."/repositories/UserRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = User::fromForm(
         htmlspecialchars($_POST["login"]),
         htmlspecialchars($_POST["email"]),
-        htmlspecialchars($_POST["password"]),
+        htmlspecialchars($_POST["password"])
     );
-    $connection = getConnection();
-    $result = insertUser($connection, $user);
+    $result = UserRepository::getInstance()->insertUser($user);
    print_r($result);
 } else {
 

@@ -5,12 +5,20 @@ class User {
     public $login;
     public $email;
     public $password;
-    public $dateEnregistrement;
+    public $createdAt;
+
+    public const TABLE_NAME ="USER";
+    public const CREATION_QUERY = 'CREATE TABLE '.DBConnection::DB_NAME.'.'.User::TABLE_NAME.' (
+            ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            LOGIN   VARCHAR(64) UNIQUE,
+            EMAIL  VARCHAR(255) UNIQUE,
+            PASSWORD    VARCHAR(255),
+            CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )';
 
     function __construct() {}
 
     public static function create(
-    
         $login,
         $email,
         $password
