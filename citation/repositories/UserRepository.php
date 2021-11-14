@@ -8,9 +8,9 @@ class UserRepository
     public const selectQuery = '
         SELECT ID as id, 
             LOGIN as login,
-            EMAIL as author,
-            PASSWORD as date,
-            CREATED_AT as createdAT  
+            EMAIL as email,
+            PASSWORD as password,
+            CREATED_AT as createdAt  
         FROM USER ';
 
     private static $_instance = null;
@@ -29,7 +29,7 @@ class UserRepository
     public function insertUser($user)
     {
         try {
-            return DBConnection::executeStatement(
+            DBConnection::executeStatement(
                 '
                     INSERT INTO USER 
                         (LOGIN, EMAIL, PASSWORD)
@@ -42,15 +42,16 @@ class UserRepository
                     ':pass' => $user->getPassword()
                 )
             );
+            array("message" => "User created successfully", "hasError"=> false);
         } catch (PDOException $e) {
             if($e->errorInfo[1]==1062 ) {
-                return "Username and/email already exists";
+                return array("message" => "Username and/email already exists", "hasError"=> true);
             }
-            return "DB Error";
+            return array("message" => "DB Error", "hasError" => true) ;
         }
     }
 
-    public function geUserByLogin($login)
+    public function getUserByLogin($login)
     {
         $connection =  DBConnection::getConnection();
         try {

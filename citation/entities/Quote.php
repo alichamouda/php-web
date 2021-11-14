@@ -1,8 +1,9 @@
 <?php
+require_once(__DIR__."/../db/DBConnection.php");
 
 class Quote {
     public  $id;
-    public  $authour;
+    public  $author;
     public  $login;
     public  $quote;
     public  $date;

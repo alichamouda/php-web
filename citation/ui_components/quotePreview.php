@@ -1,4 +1,7 @@
-<?php function quotePreview($quote, $backUrl){?>
+<?php function quotePreview($params){
+    $quote = isset($params["quote"]) ? $params["quote"] :   $quote = Quote::fromForm("", "", "", "");
+    $backUrl = isset($params["backUrl"]) ? $params["backUrl"] :   "/";
+?>
 <nav><a href="<?php echo $backUrl; ?>">Retour</a></nav>
 <main>
     <article>

@@ -96,8 +96,8 @@ class User {
     /**
      * Get the value of dateEnregistrement
      */ 
-    public function getDateEnregistrement()
+    public function getCreatedAt()
     {
-        return $this->dateEnregistrement;
+        return $this->createdAt;
     }
 }
