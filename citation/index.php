@@ -9,13 +9,13 @@ $isLogged = (isset($_SESSION["loggedin"]) ? $_SESSION["loggedin"] : false);
 
 <nav style="width: calc(100% - 64px) ; display: flex;flex-direction: row; justify-content: space-between;padding: 0 32px;">
 
-    <a href="/quotes.php">Citations</a>
+    <a href="/quote/quotes.php">Citations</a>
     <?php if ($isLogged) { ?>
-        <a href="/addQuoteForm.php">Nouvelle Citation</a>
-        <a href="/logout.php">Se déconnecter</a>
+        <a href="/quote/addQuoteForm.php">Nouvelle Citation</a>
+        <a href="/auth/logout.php">Se déconnecter</a>
     <?php } else { ?>
-        <a href="/signup.php">Inscription</a>
-        <a href="/signin.php">Login</a>
+        <a href="/auth/signup.php">Inscription</a>
+        <a href="/auth/signin.php">Login</a>
     <?php } ?>
     <?php if ($isLogged && $login == "alichamouda") { ?>
         <a href="#" onclick="confirmDbInit();">Initialiser BD</a>

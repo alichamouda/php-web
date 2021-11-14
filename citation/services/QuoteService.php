@@ -16,10 +16,10 @@ class QuoteService {
         return self::$_instance;
     }
 
-    public function insertQuote($postObject) {
+    public function insertQuote($postObject, $login) {
         $quote = Quote::fromForm(
             htmlspecialchars($postObject["auteur"]),
-            htmlspecialchars($postObject["login"]),
+            htmlspecialchars($login),
             htmlspecialchars($postObject["citation"]),
             htmlspecialchars($postObject["date-citation"])
         );

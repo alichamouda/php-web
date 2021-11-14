@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__."/services/redirect.php");
+require_once(__DIR__."/../services/redirect.php");
 
 session_start();
 $_SESSION = array();
@@ -11,4 +11,4 @@ if (ini_get("session.use_cookies")) {
         );
 }
 session_destroy();
-redirect("/index.php");
+redirect("index.php");

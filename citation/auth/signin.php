@@ -1,9 +1,9 @@
 <?php
-require_once(__DIR__."/services/UserService.php");
-require_once(__DIR__."/services/redirect.php");
-require_once(__DIR__."/ui_components/signinForm.php");
-require_once(__DIR__."/ui_components/htmlWrapper.php");
-require_once(__DIR__."/entities/User.php");
+require_once(__DIR__."/../services/UserService.php");
+require_once(__DIR__."/../services/redirect.php");
+require_once(__DIR__."/../ui_components/signinForm.php");
+require_once(__DIR__."/../ui_components/htmlWrapper.php");
+require_once(__DIR__."/../entities/User.php");
 
 
 function authenticate($user) {

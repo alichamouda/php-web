@@ -8,7 +8,7 @@ function quoteRow($quote)
         <td><?php echo $quote->get_date(); ?></td>
         <td><?php echo $quote->get_createdAt(); ?></td>
         <td>
-            <a href="/quotePreview.php?id=<?php echo $quote->get_id(); ?>">Afficher citation</a>
+            <a href="/quote/quotePreview.php?id=<?php echo $quote->get_id(); ?>">Afficher citation</a>
         </td>
     </tr>
 <?php }
