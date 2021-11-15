@@ -11,6 +11,7 @@ function quoteForm($params = array())
     <main>
         <h2>Formulaire de création de citations</h1>
             <form method="post" name="FrameCitation" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
                 <div class="form-section">
                     <label for="login">Login*</label>
                     <input name="login" maxlength="64" size="6" value="<?php echo $_SESSION["login"] ?>" disabled>

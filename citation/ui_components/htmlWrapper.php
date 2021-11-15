@@ -1,8 +1,15 @@
 <?php
 
 function htmlHeader()
-{ ?>
+{ 
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $login = isset($_SESSION["login"]) ? $_SESSION["login"]:"";
+    $isLogged =  isset($_SESSION["loggedin"]) ? $_SESSION["loggedin"]:false;
+    ?>
     <html lang="fr">
+
     <head>
         <title>Ajout de citation </title>
         <meta charset="UTF-8">
@@ -29,6 +36,7 @@ function htmlHeader()
                 margin-bottom: 4px;
                 display: block;
             }
+
             input {
                 display: block;
             }
@@ -56,20 +64,41 @@ function htmlHeader()
             }
         </style>
     </head>
+
     <body>
-        <nav>
-            <a href="/">Accueil</a>
-            <a href="/quotes.php">Citations</a>
+        <nav style="width: calc(100% - 64px) ; display: flex;flex-direction: row; justify-content: space-between;padding: 0 32px;">
+        <a href="/">Home</a>    
+        <a href="/quote/quotes.php">Citations</a>
+            <?php if ($isLogged) { ?>
+                <a href="/quote/addQuoteForm.php">Nouvelle Citation</a>
+                <a href="/auth/logout.php">Se déconnecter</a>
+            <?php } else { ?>
+                <a href="/auth/signup.php">Inscription</a>
+                <a href="/auth/signin.php">Login</a>
+            <?php } ?>
+            <?php if ($isLogged && $login == "alichamouda") { ?>
+                <a href="#" onclick="confirmDbInit();">Initialiser BD</a>
+            <?php } ?>
         </nav>
-<?php }
+    <?php }
 
 function htmlFooter()
 { ?>
+        <script>
+            function confirmDbInit() {
+                var answer = confirm("Vous voulez vraiment reinitialiser votre Base de Données ?");
+                if (answer) {
+                    window.location.href = "/db/init.php";
+                }
+            }
+        </script>
     </body>
+
     </html>
 <?php }
 
-function htmlRender($renderFct, $params = array()) {
+function htmlRender($renderFct, $params = array())
+{
     htmlHeader();
     $renderFct($params);
     htmlFooter();

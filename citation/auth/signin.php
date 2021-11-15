@@ -11,6 +11,7 @@ function authenticate($user) {
     $_SESSION["login"]=$user->getLogin();
     $_SESSION["lastConnection"]=Date("Y-m-d H:i:s");
     $_SESSION['loggedin'] = true;
+    $_SESSION['token'] = md5(uniqid(mt_rand(), true));
     redirect('/index.php');
 }
 
